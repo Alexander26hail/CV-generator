@@ -1,5 +1,6 @@
 import { exec } from "node:child_process";
 import { promises as fs } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { promisify } from "node:util";
 import type {
@@ -19,7 +20,7 @@ export class RenderCvCliService implements RenderCvBuilder {
       return this.buildPdfWithRemoteService(remoteServiceUrl, request);
     }
 
-    const baseDir = path.join(process.cwd(), ".tmp", `rendercv-${Date.now()}`);
+    const baseDir = path.join(tmpdir(), `rendercv-${Date.now()}`);
     const outputDir = path.join(baseDir, "output");
     const inputPath = path.join(baseDir, "cv.rendercv.yaml");
 
