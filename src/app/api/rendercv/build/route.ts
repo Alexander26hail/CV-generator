@@ -10,6 +10,16 @@ const schema = z.object({
 
 export async function POST(request: Request) {
   try {
+    if (process.env.VERCEL && !process.env.RENDERCV_SERVICE_URL?.trim()) {
+      return NextResponse.json(
+        {
+          error:
+            "Falta configurar RENDERCV_SERVICE_URL en Vercel para generar PDFs en producción.",
+        },
+        { status: 503 },
+      );
+    }
+
     const body = await request.json();
     const data = schema.parse(body);
 
@@ -23,6 +33,12 @@ export async function POST(request: Request) {
         ? error.message
         : "No se pudo generar el PDF con RenderCV.";
 
-    return NextResponse.json({ error: message }, { status: 400 });
+    const status =
+      message.includes("servicio remoto de RenderCV") ||
+      message.includes("No se encontró RenderCV")
+        ? 503
+        : 400;
+
+    return NextResponse.json({ error: message }, { status });
   }
 }

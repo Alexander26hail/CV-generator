@@ -1,0 +1,71 @@
+cv:
+  name: Alexander Véliz Villegas
+  location: Santiago, Chile
+  phone: tel:+56998529609
+  email: al.velizv@hotmail.com
+  social_networks:
+    - network: LinkedIn
+      username: alexanderveliz
+  sections:
+    Resumen Profesional:
+      - Desarrollador Backend SSR con experiencia sólida en arquitecturas modernas y metodologías ágiles. Especializado en el desarrollo de APIs RESTful de alto rendimiento utilizando Golang, TypeScript y C#. Amplia experiencia participando en todo el ciclo de desarrollo del software, integración continua (CI/CD) y despliegues robustos. Busco aportar mi enfoque en soluciones escalables, buenas prácticas y mejora de procesos a equipos técnicos de alto desempeño en los sectores de banca y finanzas.
+    Experiencia Laboral:
+      - company: Tsoft global
+        position: Desarrollador Backend SSR
+        location: Remoto
+        start_date: 2022
+        end_date: present
+        highlights:
+          - Contribuyo activamente en el diseño y desarrollo de soluciones backend escalables en Golang (Go) y TypeScript para proyectos críticos de alta disponibilidad en el sector seguros (Falabella Seguros).
+          - Construyo y mantengo APIs RESTful y microservicios, integrando soluciones con Azure Functions y Logic Apps para automatizar y optimizar procesos de negocio.
+          - Participo en el ciclo completo de desarrollo ágil (Scrum), realizando la gestión del código fuente, revisiones y despliegues continuos (CI/CD) a través de pipelines en Azure DevOps.
+      - company: Oopart
+        position: Desarrollador Full-Stack
+        location: Remoto
+        start_date: 2021
+        end_date: 2022
+        highlights:
+          - Desarrollé la plataforma de afiliación para el sector de la salud (Isapre Fundación Banco Estado), implementando un backend robusto y escalable en ASP.NET Core.
+          - Diseñé y documenté APIs RESTful utilizando Swagger (OpenAPI), lo que facilitó la integración eficiente con servicios de terceros y mejoró la colaboración técnica del equipo.
+          - Trabajé en equipos multidisciplinarios bajo metodologías ágiles, empleando Git y Azure DevOps para la gestión de proyectos y control de versiones.
+      - company: Banco BCI
+        position: Desarrollador Full-Stack
+        location: Remoto
+        start_date: 2020
+        end_date: 2021
+        highlights:
+          - Participé en el desarrollo y mantenimiento de aplicaciones web internas y servicios orientados al rubro financiero, utilizando Node.js, Python y Angular.
+          - Colaboré en proyectos de automatización de sistemas y mejora continua de la estabilidad y rendimiento, destacando la optimización del sistema de notificación de hechos esenciales.
+    Educación:
+      - institution: Instituto Profesional Duoc UC
+        area: Ingeniería en Informática
+        start_date: 2017
+        end_date: 2021
+    Habilidades Técnicas:
+      - label: Lenguajes
+        details: Golang, TypeScript, C#, Java, Python, SQL, JavaScript
+      - label: Frameworks
+        details: .NET Core, Gin Gonic, Node.js, Angular
+      - label: Bases de Datos
+        details: PostgreSQL, Oracle, MongoDB, SQLServer
+      - label: Herramientas y Prácticas
+        details: Git, Swagger/OpenAPI, CI/CD, Scrum, Azure DevOps, Salesforce Marketing Cloud
+    Idiomas:
+      - label: Español
+        details: Nativo
+      - label: Inglés
+        details: Nivel B1 - En perfeccionamiento
+  design:
+    theme: engineeringclassic
+    page:
+      size: a4
+      top_margin: 1.2cm
+      bottom_margin: 1.2cm
+      left_margin: 1.5cm
+      right_margin: 1.5cm
+      show_footer: false
+      show_top_note: false
+    section_titles:
+      type: with_partial_line
+  locale:
+    language: spanish
