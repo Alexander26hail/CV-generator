@@ -4,16 +4,9 @@ import type {
   RenderCvBuilder,
 } from "@/domain/services/rendercv-builder";
 import { RenderCvApiService } from "@/infrastructure/services/rendercv-api.service";
-import { RenderCvCliService } from "@/infrastructure/services/rendercv-cli.service";
-
-function createDefaultBuilder(): RenderCvBuilder {
-  return RenderCvApiService.isConfigured()
-    ? new RenderCvApiService()
-    : new RenderCvCliService();
-}
 
 export class BuildRenderCvPdfUseCase {
-  constructor(private readonly builder: RenderCvBuilder = createDefaultBuilder()) {}
+  constructor(private readonly builder: RenderCvBuilder = new RenderCvApiService()) {}
 
   async execute(request: BuildRenderCvPdfRequest): Promise<BuildRenderCvPdfResult> {
     if (!request.yamlContent.trim()) {
