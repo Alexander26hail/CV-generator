@@ -19,6 +19,8 @@ interface PromptResponse {
 interface BuildPdfResponse {
   fileName: string;
   pdfBase64: string;
+  error?: string;
+  renderCvError?: string | null;
 }
 
 interface StepCardProps {
@@ -95,6 +97,7 @@ export function CvWorkflow() {
   const [pdfFileName, setPdfFileName] = useState("cv-rendercv.pdf");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [renderCvError, setRenderCvError] = useState("");
 
   const pdfDataUrl = useMemo(() => {
     if (!pdfBase64) return "";
@@ -184,6 +187,7 @@ export function CvWorkflow() {
 
   const onBuildPdf = async () => {
     setError("");
+    setRenderCvError("");
     setLoading(true);
 
     try {
@@ -202,9 +206,12 @@ export function CvWorkflow() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ yamlContent }),
       });
-      const data = (await response.json()) as BuildPdfResponse & { error?: string };
+      const data = await response.json() as BuildPdfResponse;
 
       if (!response.ok) {
+        if (data.renderCvError) {
+          setRenderCvError(data.renderCvError);
+        }
         throw new Error(data.error || "No se pudo generar el PDF.");
       }
 
@@ -288,6 +295,17 @@ export function CvWorkflow() {
       {error ? (
         <div className="mt-6 rounded-[1.5rem] border border-red-200 bg-red-50 px-5 py-4 text-sm leading-7 text-red-700 shadow-[0_12px_35px_rgba(127,29,29,0.08)]">
           {error}
+        </div>
+      ) : null}
+
+      {renderCvError ? (
+        <div className="mt-4 rounded-[1.5rem] border border-orange-200 bg-orange-50 px-5 py-4 shadow-[0_12px_35px_rgba(154,52,18,0.07)]">
+          <p className="mb-2 text-sm font-semibold text-orange-800">
+            Errores de validación de RenderCV — copia este bloque y pídele a la IA que lo corrija:
+          </p>
+          <pre className="overflow-x-auto whitespace-pre-wrap rounded-xl bg-white/80 p-4 text-xs leading-6 text-orange-900 border border-orange-100">
+            {renderCvError}
+          </pre>
         </div>
       ) : null}
 
