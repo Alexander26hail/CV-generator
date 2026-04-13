@@ -29,7 +29,6 @@ export async function POST(request: Request) {
         { status: 422 },
       );
     }
-
     const message =
       error instanceof Error
         ? error.message

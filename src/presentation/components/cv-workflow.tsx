@@ -98,6 +98,8 @@ export function CvWorkflow() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [renderCvError, setRenderCvError] = useState("");
+  const [promptToast, setPromptToast] = useState(false);
+  const [promptCopied, setPromptCopied] = useState(false);  
 
   const pdfDataUrl = useMemo(() => {
     if (!pdfBase64) return "";
@@ -176,8 +178,11 @@ export function CvWorkflow() {
         throw new Error(data.error || "No se pudo generar el prompt.");
       }
 
+      // Líneas ~176-186 — REEMPLAZA el bloque completo de clipboard por esto:
       setPrompt(data.prompt);
       setOpenStep(4);
+      setPromptToast(true);
+      setTimeout(() => setPromptToast(false), 10000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error inesperado.");
     } finally {
@@ -306,6 +311,41 @@ export function CvWorkflow() {
           <pre className="overflow-x-auto whitespace-pre-wrap rounded-xl bg-white/80 p-4 text-xs leading-6 text-orange-900 border border-orange-100">
             {renderCvError}
           </pre>
+        </div>
+      ) : null}
+      {/* AGREGAR EL TOAST AQUÍ ↓ */}
+            {promptToast ? (
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 w-[min(90vw,440px)]">
+          <div className="flex items-start gap-3 rounded-2xl border border-emerald-200 bg-white px-5 py-4 shadow-[0_20px_60px_rgba(0,0,0,0.18)]">
+            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-xl text-emerald-600">
+              ✓
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-[var(--foreground)]">¡Prompt generado!</p>
+              <p className="mt-0.5 text-xs leading-5 text-[var(--muted)]">
+                Dirígete a tu inteligencia artificial favorita y pega el prompt.<br />
+                Procura usar la versión más moderna del modelo.
+              </p>
+              <button
+                type="button"
+                onClick={async () => {
+                  await navigator.clipboard.writeText(prompt);
+                  setPromptCopied(true);
+                  setTimeout(() => setPromptCopied(false), 2000);
+                }}
+                className="mt-2 rounded-full bg-emerald-600 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-emerald-700"
+              >
+                {promptCopied ? "¡Copiado! ✓" : "Copiar prompt"}
+              </button>
+            </div>
+            <button
+              type="button"
+              onClick={() => setPromptToast(false)}
+              className="ml-1 shrink-0 text-[var(--muted)] hover:text-[var(--foreground)]"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       ) : null}
 
@@ -450,13 +490,7 @@ export function CvWorkflow() {
                 >
                   {loading ? "Generando..." : "Generar prompt"}
                 </button>
-                <button
-                  type="button"
-                  onClick={copyPrompt}
-                  className="rounded-full border border-[var(--line)] bg-white px-5 py-3 text-sm font-medium text-[var(--foreground)]"
-                >
-                  Copiar prompt
-                </button>
+               
               </div>
 
               <textarea
